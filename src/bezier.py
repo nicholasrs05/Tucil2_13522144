@@ -25,7 +25,7 @@ iterations = int(input("Masukkan banyaknya iterasi: "))
 # Loop setiap iterasi
 for i in range (iterations):
     # Titik lama
-    arrPoints = arrIterations[i]
+    arrPoints = arrIterations[i].copy()
 
     # Kontrol lama
     temp = arrControl
@@ -50,25 +50,29 @@ for i in range (iterations):
         y = float((tempControl[j][1] + tempControl[j + 1][1]) / 2)
         arrPoints = f.insertSort(arrPoints, (x, y))
     
-    f.plot_bezier_curve(arrPoints)
-
     # Menyimpan titik-titik ke array agar dapat ditampilkan
     arrIterations.append(arrPoints)
 
 # Mengambil array titik pada iterasi terakhir
-points = arrIterations[-1]
+f.plot.ion()
 
-f.plot_bezier_curve(points)
+# Menggambar setiap iterasi titik
+for points in arrIterations:
+    f.plot.clf()
+    f.plot_bezier_curve(points)
 
-# while True:
-#     try:
-#         input = int(input("Masukkan nomor iterasi yang diinginkan: "))
-#         if (input == -1):
-#             break
-#         else:
-#             points = arrIterations[input]
-#             f.plot_bezier_curve(points)
-#     except IndexError:
-#         print("Masukkan nomor iterasi pada range 0 - ", iterations)
-#     except ValueError:
-#         print("Input tidak valid.")
+f.plot.ioff()
+f.plot.show()
+
+while True:
+    try:
+        number = int(input("Masukkan nomor iterasi yang diinginkan (-1 untuk berhenti): "))
+        if (number == -1):
+            break
+        else:
+            points = arrIterations[number]
+            f.plot_bezier_curve(points)
+    except IndexError:
+        print(f"Masukkan nomor iterasi pada range 0 - {number}")
+    except ValueError:
+        print("Input tidak valid.")
