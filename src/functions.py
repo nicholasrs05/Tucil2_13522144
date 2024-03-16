@@ -1,19 +1,5 @@
 import matplotlib.pyplot as plot
 
-# Memasukkan Point ke arrPoints dengan terurut tanpa ada pengulangan
-def insertSort(arrPoints, Point):
-    idx = 0
-
-    # Mencari index
-    while (idx < len(arrPoints) and (arrPoints[idx][0] < Point[0])):
-        idx += 1
-    
-    # Memasukkan Point ke arrPoints jika belum ada
-    if (Point) not in (arrPoints):
-        arrPoints.insert(idx, Point)
-    
-    return arrPoints
-
 # Menggambar kurva berdasarkan points
 def plot_bezier_curve(points):
     # Memisahkan nilai x dan y
