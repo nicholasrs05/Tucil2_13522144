@@ -1,6 +1,12 @@
+# PROGRAM MEMBUAT KURVA BEZIER DENGAN ALGORITMA DIVIDE AND CONQUER / BRUTE FORCE
+# DIBUAT OLEH:
+# Nama  : Nicholas Reymond Sihite
+# NIM   : 13522144
+# Kelas : K-03 Strategi Algoritma 2024
+
 import time as t
 import functions as f
-import divandconq as dac
+import divandconq as dnc
 import bruteforce as bf
 import io
 from PIL import Image
@@ -12,7 +18,7 @@ arrIterations = []
 arrPoints = []
 arrControl = []
 
-# Input banyaknya titik
+# Input: banyaknya titik
 valid = False
 while not (valid):
     try:
@@ -33,7 +39,7 @@ for i in range (countPoints):
 # Menambahkan array titik ke array iterasi agar dapat ditampilkan per iterasi
 arrIterations.append(arrPoints)
 
-# Input banyaknya iterasi
+# Input: banyaknya iterasi
 valid = False
 while not (valid):
     try:
@@ -43,7 +49,7 @@ while not (valid):
     except ValueError:
         print("Tolong masukkan bilangan bulat (integer)!")
 
-# Input algoritma yang ingin digunakan
+# Input: algoritma yang ingin digunakan
 valid = False
 print("\nMau dibuat dengan algoritma apa?")
 print("1. Divide and Conquer")
@@ -64,11 +70,20 @@ startTime = t.time()
 if ((strInput == "1") or (strInput == "Divide and Conquer")):
     # Loop setiap iterasi
     for i in range (iterations):
-
         arrPoints = []
-        arrControl = dac.createNewControl(arrControl, countPoints)
+
+        # Mengambil titik kontrol yang baru
+        arrControl = dnc.createNewControl(arrControl, countPoints)
+
+        # Mengambil titik-titik yang akan digambarkan
+        # Contoh:
+        # countPoints = 3
+        # arrControl = [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
+        # Titik-titik yang akan diambil adalah (1, 1), (3, 3), dan (5, 5)
         for j in range (0, len(arrControl), countPoints - 1):
             arrPoints.append(arrControl[j])
+
+        # Memasukkan titik-titik ke penyimpanan titik setiap iterasi
         arrIterations.append(arrPoints)
 
 # Algoritma Brute Force
@@ -92,6 +107,7 @@ for points in arrIterations:
 f.plot.ioff()
 f.plot.show()
 
+# Menampilkan kurva iterasi
 berhenti = False
 while not (berhenti):
     try:
@@ -107,7 +123,7 @@ while not (berhenti):
     except ValueError:
         print("Input tidak valid.")
 
-# Menyimpan file
+# Input: user ingin menyimpan file atau tidak
 valid = False
 while not (valid):
     print("\nApakah Anda ingin menyimpan hasil dalam format .gif? (Ya/Tidak)")
@@ -117,6 +133,7 @@ while not (valid):
     else:
         print("Masukan tidak valid!")
 
+# Jika ingin menyimpan file
 if (strInput == "Ya"):
     frames = []
 
