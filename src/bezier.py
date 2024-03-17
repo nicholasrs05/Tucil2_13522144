@@ -49,6 +49,8 @@ while not (valid):
     except ValueError:
         print("Tolong masukkan bilangan bulat (integer)!")
 
+arrMidPoints = [[] for i in range (iterations + 1)]
+
 # Input: algoritma yang ingin digunakan
 valid = False
 print("\nMau dibuat dengan algoritma apa?")
@@ -73,7 +75,9 @@ if ((strInput == "1") or (strInput == "Divide and Conquer")):
         arrPoints = []
 
         # Mengambil titik kontrol yang baru
-        arrControl = dnc.createNewControl(arrControl, countPoints)
+        temp = dnc.createNewControl(arrControl, countPoints)
+        arrControl = temp[0].copy()
+        arrMidPoints[i + 1] = temp[1].copy()
 
         # Mengambil titik-titik yang akan digambarkan
         # Contoh:
@@ -100,9 +104,14 @@ print(f"\nWaktu eksekusi algoritma: {endTime - startTime} detik\n")
 f.plot.ion()
 
 # Menggambar setiap iterasi titik
+i = 0
 for points in arrIterations:
     f.plot.clf()
+    for j in range (len(arrMidPoints[i])):
+        f.plot_bezier_curve(arrMidPoints[i][j])
+    f.plot_points_only(points)
     f.plot_bezier_curve(points)
+    i = i + 1
 
 f.plot.ioff()
 f.plot.show()

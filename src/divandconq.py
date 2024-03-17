@@ -8,6 +8,8 @@ def createNewControl(prevControl, cntControl):
     # Lalu setiap bagian digunakan untuk membuat titik kontrol baru
 
     newControl = []
+    arrMidPoints = [[] for i in range (cntControl)]
+    arrMidPoints[0] = prevControl.copy()
     i = 0
 
     while (i < (len(prevControl) - cntControl + 1)):
@@ -34,6 +36,10 @@ def createNewControl(prevControl, cntControl):
                 y = float((temp[k][1] + temp[k + 1][1]) / 2)
                 temp2.append((x, y))
 
+                # Menyimpan titik tengah untuk menggambar kurva step-by-step
+                if ((x, y)) not in (arrMidPoints[idx]):
+                    arrMidPoints[idx].append((x, y))
+
             temp = temp2.copy()
 
             # Menyimpan titik tengah paling kiri dan paling kanan
@@ -52,4 +58,4 @@ def createNewControl(prevControl, cntControl):
         # Melanjutkan ke bagian berikutnya
         i = i + (cntControl - 1)
 
-    return newControl
+    return [newControl, arrMidPoints]
