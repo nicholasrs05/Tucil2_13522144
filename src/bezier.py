@@ -16,6 +16,7 @@ print("\n\nSELAMAT DATANG DI PROGRAM PEMBUAT KURVA BEZIER DENGAN ALGORITMA DIVID
 # Inisiasi variabel
 arrIterations = []
 arrPoints = []
+arrControlIterations = []
 arrControl = []
 
 # Input: banyaknya titik
@@ -38,6 +39,7 @@ for i in range (countPoints):
 
 # Menambahkan array titik ke array iterasi agar dapat ditampilkan per iterasi
 arrIterations.append(arrPoints)
+arrControlIterations.append(arrControl)
 
 # Input: banyaknya iterasi
 valid = False
@@ -89,6 +91,7 @@ if ((strInput == "1") or (strInput == "Divide and Conquer")):
 
         # Memasukkan titik-titik ke penyimpanan titik setiap iterasi
         arrIterations.append(arrPoints)
+        arrControlIterations.append(arrControl)
 
 # Algoritma Brute Force
 else:
@@ -107,10 +110,17 @@ f.plot.ion()
 i = 0
 for points in arrIterations:
     f.plot.clf()
-    for j in range (len(arrMidPoints[i])):
-        f.plot_bezier_curve(arrMidPoints[i][j])
+    if (i != 0):
+        f.plot_points_only(arrControlIterations[i - 1])
+        f.plot_control_points(arrControlIterations[i - 1])
+    else:
+        f.plot_points_only(arrControlIterations[i])
+    for j in range (1, len(arrMidPoints[i])):
+        f.plot_midpoints(arrMidPoints[i][j], countPoints - j)
     f.plot_points_only(points)
-    f.plot_bezier_curve(points)
+    f.plot_bezier_curve(points, i)
+    f.plot.clf()
+    f.plot_bezier_curve(points, i)
     i = i + 1
 
 f.plot.ioff()
@@ -126,7 +136,7 @@ while not (berhenti):
             berhenti = True
         else:
             points = arrIterations[number]
-            f.plot_bezier_curve(points)
+            f.plot_bezier_curve(points, number)
     except IndexError:
         print(f"Masukkan nomor iterasi pada range 0 - {iterations}")
     except ValueError:
@@ -174,5 +184,6 @@ t.sleep(0.5)
 
 print("Menutup program", end = "")
 for i in range (3):
-    print(".", end = "")
     t.sleep(1)
+    print(".", end = "")
+t.sleep(1)

@@ -47,6 +47,7 @@ def createNewControl(prevControl, cntControl):
             # (1.5, 1.5) dan (2.5, 2.5) akan diinsert di tengah saveControl
             saveControl.insert(idx, temp[0])
             saveControl.insert(len(saveControl) - idx, temp[-1])
+
             idx = idx + 1
             # Loop dilanjutkan sampai hanya ada 1 elemen temp, yaitu titik baru yang akan dijadikan bagian dari kurva
 
