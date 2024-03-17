@@ -1,4 +1,3 @@
-# Fungsi tambahan divide and conquer
 def createNewControl(prevControl, cntControl):
     newControl = []
     newControl.append(prevControl[0])
