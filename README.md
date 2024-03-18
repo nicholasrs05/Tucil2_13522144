@@ -8,7 +8,10 @@
 
 ## Deskripsi Program
 Program ini adalah program yang dibuat untuk menggambar kurva Bezier dengan algoritma Divide and Conquer sebagai algoritma utama dan
-algoritma Brute Force sebagai algoritma alternatif. Program ini diimplementasikan dengan bahasa Python.
+algoritma Brute Force sebagai algoritma alternatif. Program ini diimplementasikan dengan bahasa Python. Program akan menampilkan proses pembuatan
+kurva Bezier secara step-by-step dengan algoritma Divide and Conquer. Selain itu, program juga akan menampilkan perbandingan waktu eksekusi
+kedua algoritma. Setelah itu, program juga dapat membandingkan hasil kurva kedua algoritma secara side-to-side comparison.
+(Tambahan: Program dapat menyimpan hasil kurva Bezier per iterasi sebagai file GIF)
 
 ## Requirement Program
 Module yang butuh instalasi: PIL dan matplotlib\n
@@ -38,7 +41,7 @@ Module yang butuh instalasi: PIL dan matplotlib\n
     ```
 4. Program akan menampilkan hasil setiap iterasi mulai dari 0 sampai nIterations beserta step-by-step cara kurva digambar. Selain itu,
    program juga akan menampilkan waktu eksekusi pencarian titik-titik dengan algoritma Divide and Conquer dan Brute Force
-5. Jika ingin mengunjungi iterasi sebelumnya, tutup kurva lalu masukkan nomor iterasi pada program.
+5. Jika ingin mengunjungi iterasi lain, tutup kurva lalu masukkan nomor iterasi pada program.
 6. Program dapat menyimpan hasil kurva Bezier untuk setiap iterasi jika diinginkan. File .gif akan berada pada folder "test"
 7. Kompilasi dilakukan dengan masuk ke folder "src", buka terminal, lalu masukkan perintah berikut
     ```sh
