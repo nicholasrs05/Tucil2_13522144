@@ -15,6 +15,7 @@ print("\n\nSELAMAT DATANG DI PROGRAM PEMBUAT KURVA BEZIER DENGAN ALGORITMA DIVID
 
 # Inisiasi variabel
 arrIterations = []
+arrIterationsBF = []
 arrPoints = []
 arrControlIterations = []
 arrControl = []
@@ -33,12 +34,28 @@ while not (valid):
 print("\nMasukkan titik-titik dengan format:\nx y")
 for i in range (countPoints):
     x, y = input().split()
+    x = float(x)
+    y = float(y)
+    if (i == 0):
+        min = x
+        max = x
+    else:
+        if (x < min):
+            min = x
+        if (y < min):
+            min = y
+        if (x > max):
+            max = x
+        if (y > max):
+            max = y
     if (i == 0) or (i == countPoints - 1):
-        arrPoints.append((float(x), float(y)))
-    arrControl.append((float(x), float(y)))
+        arrPoints.append((x, y))
+    arrControl.append((x, y))
+extremePoint = [min, max]
 
 # Menambahkan array titik ke array iterasi agar dapat ditampilkan per iterasi
 arrIterations.append(arrPoints)
+arrIterationsBF.append(arrPoints)
 arrControlIterations.append(arrControl)
 
 # Input: banyaknya iterasi
@@ -53,80 +70,81 @@ while not (valid):
 
 arrMidPoints = [[] for i in range (iterations + 1)]
 
-# Input: algoritma yang ingin digunakan
-valid = False
-print("\nMau dibuat dengan algoritma apa?")
-print("1. Divide and Conquer")
-print("2. Brute Force")
-
-while not (valid):
-    print("\nSilakan masukkan nomor ATAU nama algoritma (case sensitive)")
-    strInput = str(input(">> "))
-    if ((strInput == "1") or (strInput == "2") or (strInput == "Divide and Conquer") or (strInput == "Brute Force")):
-        valid = True
-    else:
-        print("Masukan tidak valid!")
-
 # Time keeper (start)
 startTime = t.time()
 
 # Algoritma Divide and Conquer
-if ((strInput == "1") or (strInput == "Divide and Conquer")):
-    # Loop setiap iterasi
-    for i in range (iterations):
-        arrPoints = []
+# Loop setiap iterasi
+for i in range (iterations):
+    arrPoints = []
 
-        # Mengambil titik kontrol yang baru
-        temp = dnc.createNewControl(arrControl, countPoints)
-        arrControl = temp[0].copy()
-        arrMidPoints[i + 1] = temp[1].copy()
+    # Mengambil titik kontrol yang baru
+    temp = dnc.createNewControl(arrControl, countPoints)
+    arrControl = temp[0].copy()
+    arrMidPoints[i + 1] = temp[1].copy()
 
-        # Mengambil titik-titik yang akan digambarkan
-        # Contoh:
-        # countPoints = 3
-        # arrControl = [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
-        # Titik-titik yang akan diambil adalah (1, 1), (3, 3), dan (5, 5)
-        for j in range (0, len(arrControl), countPoints - 1):
-            arrPoints.append(arrControl[j])
+    # Mengambil titik-titik yang akan digambarkan
+    # Contoh:
+    # countPoints = 3
+    # arrControl = [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
+    # Titik-titik yang akan diambil adalah (1, 1), (3, 3), dan (5, 5)
+    for j in range (0, len(arrControl), countPoints - 1):
+        arrPoints.append(arrControl[j])
 
-        # Memasukkan titik-titik ke penyimpanan titik setiap iterasi
-        arrIterations.append(arrPoints)
-        arrControlIterations.append(arrControl)
+    # Memasukkan titik-titik ke penyimpanan titik setiap iterasi
+    arrIterations.append(arrPoints)
+    arrControlIterations.append(arrControl)
+
+endTime = t.time()
+dncTime = endTime - startTime
+
+startTime = t.time()
 
 # Algoritma Brute Force
-else:
-    print("Coming soon! :)))")
+# Loop setiap iterasi
+for i in range (iterations):
+    arrPoints = []
+    amountPoints = 2**(i + 1) + 1
+    tVal = 1 / (amountPoints - 1)
+    coeff = bf.createPascalTriangle(countPoints - 1)
+    arrPoints = bf.calculate(arrControlIterations[0], coeff, tVal)
+    arrIterationsBF.append(arrPoints)
 
 # Time keeper (end)
 endTime = t.time()
+bfTime = endTime - startTime
 
 # Menampilkan waktu eksekusi
-print(f"\nWaktu eksekusi algoritma: {endTime - startTime} detik\n")
+print(f"\nWaktu eksekusi algoritma Divide and Conquer: {dncTime} detik")
+print(f"Waktu eksekusi algoritma Brute Force: {bfTime} detik\n")
 
 # Inisiasi kurva
 f.plot.ion()
 
-# Menggambar setiap iterasi titik
+# Menggambar setiap iterasi titik beserta membuat kurva step-by-step
 i = 0
 for points in arrIterations:
     f.plot.clf()
     if (i != 0):
-        f.plot_points_only(arrControlIterations[i - 1])
-        f.plot_control_points(arrControlIterations[i - 1])
+        # Iterasi 1 dan seterusnya
+        f.plot_points_only(arrControlIterations[i - 1], extremePoint[1], extremePoint[0])
+        f.plot_control_points(arrControlIterations[i - 1], extremePoint[1], extremePoint[0])
     else:
-        f.plot_points_only(arrControlIterations[i])
+        # Iterasi 0
+        f.plot_points_only(arrControlIterations[i], extremePoint[1], extremePoint[0])
+
+    # Loop untuk menggambar semua titik tengah
     for j in range (1, len(arrMidPoints[i])):
-        f.plot_midpoints(arrMidPoints[i][j], countPoints - j)
-    f.plot_points_only(points)
-    f.plot_bezier_curve(points, i)
+        f.plot_midpoints(arrMidPoints[i][j], countPoints - j, extremePoint[1], extremePoint[0])
+
+    f.plot_points_only(points, extremePoint[1], extremePoint[0])
+    f.plot_bezier_curve(points, i, extremePoint[1], extremePoint[0])
     f.plot.clf()
-    f.plot_bezier_curve(points, i)
+    f.plot_bezier_curve(points, i, extremePoint[1], extremePoint[0])
     i = i + 1
 
 f.plot.ioff()
-f.plot.show()
 
-# Menampilkan kurva iterasi
 berhenti = False
 while not (berhenti):
     try:
@@ -135,8 +153,10 @@ while not (berhenti):
         if (number == -1):
             berhenti = True
         else:
-            points = arrIterations[number]
-            f.plot_bezier_curve(points, number)
+            pointsDNC = arrIterations[number]
+            pointsBF = arrIterationsBF[number]
+            f.draw_two_curve(pointsDNC, pointsBF, extremePoint[1], extremePoint[0])
+            
     except IndexError:
         print(f"Masukkan nomor iterasi pada range 0 - {iterations}")
     except ValueError:
