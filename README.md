@@ -11,7 +11,7 @@ Program ini adalah program yang dibuat untuk menggambar kurva Bezier dengan algo
 algoritma Brute Force sebagai algoritma alternatif. Program ini diimplementasikan dengan bahasa Python.
 
 ## Requirement Program
-Module yang butuh instalasi: PIL dan matplotlib
+Module yang butuh instalasi: PIL dan matplotlib\n
    Cara install PIL:
    ```sh
    pip install Pillow

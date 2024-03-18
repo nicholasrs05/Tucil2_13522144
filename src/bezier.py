@@ -33,24 +33,30 @@ while not (valid):
 # Loop menerima input titik
 print("\nMasukkan titik-titik dengan format:\nx y")
 for i in range (countPoints):
-    x, y = input().split()
-    x = float(x)
-    y = float(y)
-    if (i == 0):
-        min = x
-        max = x
-    else:
-        if (x < min):
-            min = x
-        if (y < min):
-            min = y
-        if (x > max):
-            max = x
-        if (y > max):
-            max = y
-    if (i == 0) or (i == countPoints - 1):
-        arrPoints.append((x, y))
-    arrControl.append((x, y))
+    valid = False
+    while not (valid):
+        try:
+            x, y = input().split()
+            x = float(x)
+            y = float(y)
+            if (i == 0):
+                min = x
+                max = x
+            else:
+                if (x < min):
+                    min = x
+                if (y < min):
+                    min = y
+                if (x > max):
+                    max = x
+                if (y > max):
+                    max = y
+            if (i == 0) or (i == countPoints - 1):
+                arrPoints.append((x, y))
+            arrControl.append((x, y))
+            valid = True
+        except ValueError:
+            print("Tolong masukkan titik sesuai format")
 extremePoint = [min, max]
 
 # Menambahkan array titik ke array iterasi agar dapat ditampilkan per iterasi
@@ -150,7 +156,7 @@ f.plot.ioff()
 berhenti = False
 while not (berhenti):
     try:
-        print("Masukkan nomor iterasi yang ingin ditampilkan (-1 untuk berhenti)")
+        print("Masukkan nomor iterasi yang ingin ditampilkan, tutup kurva sebelumnya untuk memeriksa iterasi lain (-1 untuk berhenti)")
         number = int(input(">> "))
         if (number == -1):
             berhenti = True
