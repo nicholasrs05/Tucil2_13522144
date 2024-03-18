@@ -125,6 +125,7 @@ f.plot.ion()
 i = 0
 for points in arrIterations:
     f.plot.clf()
+    f.plot_points_with_coordinates(arrControlIterations[0], extremePoint[1], extremePoint[0])
     if (i != 0):
         # Iterasi 1 dan seterusnya
         f.plot_points_only(arrControlIterations[i - 1], extremePoint[1], extremePoint[0])
@@ -140,6 +141,7 @@ for points in arrIterations:
     f.plot_points_only(points, extremePoint[1], extremePoint[0])
     f.plot_bezier_curve(points, i, extremePoint[1], extremePoint[0])
     f.plot.clf()
+    f.plot_points_with_coordinates(arrControlIterations[0], extremePoint[1], extremePoint[0])
     f.plot_bezier_curve(points, i, extremePoint[1], extremePoint[0])
     i = i + 1
 
@@ -196,7 +198,7 @@ if (strInput == "Ya"):
     namaFile = str(input(">> "))
 
     # Simpan sebagai .gif
-    frames[0].save(f'test/{namaFile}.gif', format = 'GIF', append_images = frames[1:], save_all = True, duration = 1000, loop = 0)
+    frames[0].save(f'../test/{namaFile}.gif', format = 'GIF', append_images = frames[1:], save_all = True, duration = 1000, loop = 0)
 
 t.sleep(0.5)
 print("\n\nTERIMA KASIH TELAH MENGGUNAKAN PROGRAM PEMBUAT KURVA BEZIER :)\n\n")

@@ -12,6 +12,7 @@ def createPascalTriangle(level):
         curr.append(1)
         return curr
 
+# Menghitung koordinat titik-titik
 def calculate(arrControl, coefficients, tVal):
     i = 0.0
     savePoints = []

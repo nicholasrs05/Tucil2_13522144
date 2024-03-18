@@ -103,3 +103,24 @@ def draw_two_curve(points1, points2, max_val, min_val):
 
     plot.tight_layout()
     plot.show()
+
+def plot_points_with_coordinates(points, max_val, min_val):
+    # Extract x and y coordinates from points
+    x_values = [point[0] for point in points]
+    y_values = [point[1] for point in points]
+
+    # Plot points
+    plot.scatter(x_values, y_values)
+
+    # Annotate each point with its coordinates
+    for point in points:
+        plot.annotate(f'({point[0]}, {point[1]})', xy = point, textcoords = 'offset points', xytext = (5,5), ha = 'left')
+    plot_curve(points, max_val, min_val)
+
+    # Set labels and title
+    plot.xlabel('X')
+    plot.ylabel('Y')
+    plot.title('Plot with Point Coordinates')
+
+    # Show plot
+    plot.show()
